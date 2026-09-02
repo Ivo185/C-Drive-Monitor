@@ -30,19 +30,11 @@
 ## 📁 Структура на проекта
 
 ```
-📦 CDriveMonitor_v1.0.zip
-├── 📄 README.md               — Това ръководство
-├── 📄 RELEASE_NOTES.md        — История на версиите
-├── 📄 AI_Prompts.md           — Промпти за AI анализ
-├── ⚙️  Install-Monitor.exe     — Инсталатор (изисква Admin)
-├── 🗑️  Uninstall-Monitor.exe   — Деинсталатор
-├── 📜 C_Drive_Monitor.ps1     — Основен скрипт
-└── 📂 src/                    — Изходен код
-    ├── C_Drive_Monitor.ps1
-    ├── Install-Monitor.ps1
-    ├── Uninstall-Monitor.ps1
-    ├── scan.ps1               — Еднократно сканиране
-    └── clean.ps1              — Шаблон за почистване
+├── C_Drive_Monitor.ps1
+├── Install-Monitor.ps1
+├── Uninstall-Monitor.ps1
+├── scan.ps1               — Еднократно сканиране
+└── clean.ps1              — Шаблон за почистване
 ```
 
 ---
