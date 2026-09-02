@@ -1,29 +1,112 @@
-# C: Drive Monitor
+# 🖥️ C: Drive Monitor
 
-A lightweight, non-intrusive 14-day monitoring tool for Windows that tracks disk space usage, caching behavior, and identifies the root causes of C: drive storage depletion.
+> **Лек, безопасен и надежден инструмент за 14-дневно наблюдение на C: диска в Windows 11**  
+> Разкрива защо свободното пространство постепенно намалява — без да изтрива нищо.
 
-## Features
-- **Zero Impact**: Runs silently in the background with minimal CPU/RAM usage.
-- **Safe**: Does not delete, modify, or move any of your files. It only monitors.
-- **Smart Tracking**:
-  - **5-Minute Interval**: Monitors overall C: drive space, Windows Update cache, and system services. Logs sudden space drops.
-  - **30-Minute Interval**: Identifies processes with high disk write activity, scans large folder growths (AppData, Temp, Caches, WinSxS), and spots new files larger than 100MB.
-  - **24-Hour Interval**: Generates a daily summary and detects newly installed software.
-- **14-Day Final Report**: Automatically generates a comprehensive report of where your space went and stops monitoring.
+---
 
-## Installation
-1. Extract the downloaded `.zip` archive.
-2. Double-click on `Install-Monitor.exe` (requires Administrator privileges).
-3. The tool will register a silent Scheduled Task and begin monitoring immediately.
-4. A log file named `C_Drive_Monitor.txt` will be created on your Desktop.
+## ✨ Какво прави
 
-## Uninstallation
-To remove the background monitor task at any time, simply double-click `Uninstall-Monitor.exe`. 
-Note: This will not delete the generated log file on your Desktop, allowing you to review your data.
+- ✅ **Само наблюдава** — не изтрива, не мести, не променя файлове
+- 📊 Следи свободното място на всеки **5 минути**
+- 🔍 Анализира папки и кешове на всеки **30 минути**
+- 📋 Генерира **дневен отчет** и **финален 14-дневен доклад**
+- 🤫 Работи напълно **скрито** на заден план
+- 🔁 **Стартира автоматично** при всяко влизане в Windows
 
-## Requirements
-- Windows 10 or Windows 11
+---
+
+## 🚀 Инсталация
+
+1. Свали и разархивирай ZIP файла
+2. Кликни два пъти на **`Install-Monitor.exe`**
+3. Разреши Администраторски права (UAC)
+4. Готово — мониторингът стартира веднага
+
+Лог файлът ще се появи на Десктопа: `C_Drive_Monitor.txt`
+
+---
+
+## 📁 Структура на проекта
+
+```
+📦 CDriveMonitor_v1.0.zip
+├── 📄 README.md               — Това ръководство
+├── 📄 RELEASE_NOTES.md        — История на версиите
+├── 📄 AI_Prompts.md           — Промпти за AI анализ
+├── ⚙️  Install-Monitor.exe     — Инсталатор (изисква Admin)
+├── 🗑️  Uninstall-Monitor.exe   — Деинсталатор
+├── 📜 C_Drive_Monitor.ps1     — Основен скрипт
+└── 📂 src/                    — Изходен код
+    ├── C_Drive_Monitor.ps1
+    ├── Install-Monitor.ps1
+    ├── Uninstall-Monitor.ps1
+    ├── scan.ps1               — Еднократно сканиране
+    └── clean.ps1              — Шаблон за почистване
+```
+
+---
+
+## 🔬 Какво се следи
+
+### На всеки 5 минути (леки проверки)
+| Проверка | Описание |
+|----------|----------|
+| 💾 Дисково пространство | Общо / Използвано / Свободно / % |
+| ⚠️ Внезапни спадове | Предупреждение при >100MB, >500MB, >1GB |
+| 🔄 Windows Update кеш | Размер и промяна на `SoftwareDistribution\Download` |
+| 🛎️ Системни услуги | Статус на wuauserv, bits, UsoSvc, dosvc |
+
+### На всеки 30 минути (разширени проверки)
+| Проверка | Описание |
+|----------|----------|
+| 📂 Главни папки | AppData, ProgramData, Program Files, Downloads |
+| 🗂️ Top 20 AppData | Кои приложения растат най-бързо |
+| 🖥️ Процеси | Кои записват най-много на диска |
+| 🗑️ Кошче | Размер и промени |
+| 📦 Нови файлове | Файлове >100MB появили се за последните 30 мин |
+| 🌡️ Temp папки | `Windows\Temp` и `%TEMP%` |
+
+### Веднъж на 24 часа
+| Проверка | Описание |
+|----------|----------|
+| 📋 Дневен отчет | Обобщение за деня |
+| 💿 Инсталиран софтуер | Нови програми инсталирани днес |
+
+---
+
+## 🤖 AI Анализ
+
+След мониторинга (или след `scan.ps1`) използвай **`AI_Prompts.md`**:
+
+1. Стартирай `scan.ps1` от папката `src/`
+2. Отвори генерирания `scan_results.json`
+3. Копирай го в ChatGPT / Gemini / Claude с промпт от `AI_Prompts.md`
+4. AI ще генерира `clean.ps1` специално за твоя компютър
+
+---
+
+## 🛑 Деинсталация
+
+Кликни два пъти на `Uninstall-Monitor.exe` — премахва Scheduled Task.  
+**Лог файлът на Десктопа НЕ се изтрива.**
+
+---
+
+## ⚙️ Изисквания
+
+- Windows 10 / Windows 11
 - PowerShell 5.1+
+- .NET Framework 4.5+
 
-## Source Code
-The `src` folder contains the raw `.ps1` scripts for review. The `.exe` files in the root are compiled wrappers for convenience.
+---
+
+## 🔒 Сигурност
+
+Скриптът **НЕ**:
+- изтрива или мести файлове
+- променя системни настройки или Registry
+- спира или стартира услуги
+- деинсталира програми
+
+Той е **100% само за наблюдение**.
